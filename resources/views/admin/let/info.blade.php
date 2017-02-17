@@ -24,9 +24,13 @@
 @section('content')
 	@include('admin.partials.property-let')
 <div class="content-right table-layout">
- {!! Form::open(array('url' => action('Admin\LetPropertyController@postStore'),'method'=>'POST')) !!}
+  {!! Form::model($property,array('url' => action('Admin\LetPropertyController@postStore'),'method'=>'POST')) !!}
+@if($property)
+{!! Form::hidden('id') !!} 
+ @endif
  {!! Form::hidden('redirect_to',$active,array('id'=>'redirect_to')) !!}
-                        <button type="submit"  class="btn btn-save btn-success pull-right"> <i class="fa fa-save"></i>  Save Property </button>
+
+        <button type="submit"  class="btn btn-save btn-success pull-right"> <i class="fa fa-save"></i>  Save Property </button>
                         <!-- Column Center -->
                         <div class="chute" style="height: auto;">
                             <div class="center-block">
@@ -69,7 +73,7 @@
                                                 </div>
                                                 <div class="col-sm-4 ph10">
                                                     <label for="postcode" class="field">
-                        {!! Form::text('postcode', null, array('id'=>'postcode','class' => 'gui-input','placeholder'=>'Postcode')) !!}
+                        {!! Form::text('postal_code', null, array('id'=>'postcode','class' => 'gui-input','placeholder'=>'Postcode')) !!}
                          
                                                      </label>
                                                 </div>
@@ -85,29 +89,10 @@
 										<div class="section row mb10">
                          <div class="col-sm-4 ph10">
 	                         <label for="county" class="field">
-	                        {!! Form::text('county', null, array('id'=>'county','class' => 'gui-input mt20','placeholder'=>'Asking Rent')) !!}
+	                        {!! Form::text('metadata[asking_rent]', null, array('id'=>'asking_rent','class' => 'gui-input mt20','placeholder'=>'Asking Rent')) !!}
 	                         </label>
 	                     </div>
-	                    <div class="col-sm-4 ph10">
-		                    <div class="option-group field mt20">
-	                        <?php
-	                        echo '<label class="option mb10">';
-	                        echo Form::checkbox('name', 'value');
-	                        echo '<span class="checkbox"></span>Managed Only';
-	                        echo '</label>';
-	                         ?>                 
-	                        </div> 
-	                        </div> 
-                        <div class="col-sm-4 ph10">
-		                    <div class="option-group field mt20">
-	                        <?php
-	                        echo '<label class="option mb10">';
-	                        echo Form::checkbox('name', 'value');
-	                        echo '<span class="checkbox"></span>Managed Only';
-	                        echo '</label>';
-	                         ?>                 
-	                        </div> 
-							</div> 
+
                         
                                             </div>
                                          </div>
@@ -122,10 +107,10 @@
                                         <div class="allcp-form theme-primary">
                                             <div class="section row mb10">
                                                 <div class="col-sm-12 ph10">
-                        {!! Form::textarea('description', null, array('id'=>'summary','class' => 'gui-textarea mb10','placeholder'=>'Description')) !!}
+                        {!! Form::textarea('metadata[description]', null, array('id'=>'summary','class' => 'gui-textarea mb10','placeholder'=>'Description')) !!}
                                                       
                       
-                        {!! Form::textarea('summary', null, array('id'=>'summary','class' => 'gui-textarea','placeholder'=>'Summary')) !!}
+                        {!! Form::textarea('metadata[summary]', null, array('id'=>'summary','class' => 'gui-textarea','placeholder'=>'Summary')) !!}
                                                       
                                                 </div>
                                             </div>
@@ -137,14 +122,14 @@
                        <div class="col-md-3">
                                 	<div class="section row mb10">
 	                                    <div class="col-sm-12 ph10 allcp-form theme-primary">
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10 mt25','placeholder'=>'Features')) !!}	
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
-	                                    {!! Form::text('double_rooms', null, array('id'=>'instuction_date','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][0]', null, array('id'=>'features0','class' => 'gui-input mb10 mt25','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][1]', null, array('id'=>'features1','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][2]', null, array('id'=>'features2','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][3]', null, array('id'=>'features3','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][4]', null, array('id'=>'features4','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][5]', null, array('id'=>'features5','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][6]', null, array('id'=>'features6','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
+	                                    {!! Form::text('metadata[features][7]', null, array('id'=>'features7','class' => 'gui-input mb10','placeholder'=>'Features')) !!}	
 	                                    </div>
                                     </div>        
                                 </div>       
@@ -153,29 +138,31 @@
                                         <div class="allcp-form theme-primary">
                                             <div class="section row mb10">
                                                 <div class="col-sm-3 ph10">
-                        {!! Form::select('bedrooms', [0,1,2,3,4,5,6],null, array('id'=>'bedrooms','class' => 'select2 mb10','placeholder'=>'Bedrooms','style'=>'width: 100%')) !!}
+                        {!! Form::select('metadata[property_types]', ['House','Flat','Studio','Bungalow','Shop','Residential Plot','Warehouse','New Item'],null, array('id'=>'property_types','class' => 'select2 mb10','placeholder'=>'Property Types','style'=>'width: 100%')) !!}
+                       <br><br>                        
+                        {!! Form::select('metadata[bedrooms]', [0,1,2,3,4,5,6],null, array('id'=>'bedrooms','class' => 'select2 mb10','placeholder'=>'Bedrooms','style'=>'width: 100%')) !!}
                        <br><br>
-                       {!! Form::select('single_rooms', [0,1,2,3,4,5,6],null, array('id'=>'single_rooms','class' => 'select2 mb10','placeholder'=>'Single Rooms','style'=>'width: 100%')) !!}
+                       
+                       {!! Form::select('metadata[how_detached]', ['Detached','Semi-Detached','Mid Terraced','End of Terraced'],null, array('id'=>'how_detached','class' => 'select2 mb10','placeholder'=>'How Detached','style'=>'width: 100%')) !!}
                        <br><br>
-                       {!! Form::select('double_rooms', [0,1,2,3,4,5,6],null, array('id'=>'double_rooms','class' => 'select2 mb10','placeholder'=>'Double Rooms','style'=>'width: 100%')) !!}
+                       {!! Form::select('metadata[bathrooms]', [0,1,2,3,4,5,6],null, array('id'=>'bathrooms','class' => 'select2 mb10','placeholder'=>'Bathrooms','style'=>'width: 100%')) !!}
                        <br><br>
-                       {!! Form::select('bathrooms', [0,1,2,3,4,5,6],null, array('id'=>'bathrooms','class' => 'select2 mb10','placeholder'=>'Bathrooms','style'=>'width: 100%')) !!}
+                       {!! Form::select('metadata[showers]', [0,1,2,3,4,5,6],null, array('id'=>'showers','class' => 'select2 mb10','placeholder'=>'Showers','style'=>'width: 100%')) !!}
                        <br><br>
-                       {!! Form::select('showers', [0,1,2,3,4,5,6],null, array('id'=>'showers','class' => 'select2 mb10','placeholder'=>'Showers','style'=>'width: 100%')) !!}
+                       {!! Form::select('metadata[receptions]', [0,1,2,3,4,5,6],null, array('id'=>'receptions','class' => 'select2 mb10','placeholder'=>'Receptions','style'=>'width: 100%')) !!}
                        <br><br>
-                       {!! Form::select('receptions', [0,1,2,3,4,5,6],null, array('id'=>'receptions','class' => 'select2 mb10','placeholder'=>'Receptions','style'=>'width: 100%')) !!}
-                       <br><br>
-                        {!! Form::select('furnished', ['Furnished','Unfurnished',''],null, array('id'=>'instuction_date','class' => 'select2 mb10','placeholder'=>'Furnished','style'=>'width: 100%')) !!}
+                        {!! Form::select('metadata[furnished]', ['Furnished','Unfurnished',''],null, array('id'=>'instuction_date','class' => 'select2 mb10','placeholder'=>'Furnished','style'=>'width: 100%')) !!}
                                                 </div>
                                                 <div class="col-sm-3 ph10">
                                                 </div>
                                                <div class="col-sm-6 ph10">
                                                	<div class="option-group field">
                                                	<?php 
-                                               	$checkboxs=['Double Glazed','Central Heating','Communal Heating','High Ceilings','TV','Washing Maching','Wooden Floors','Cable','Satelite','Video Player','Lift','Garden','Front Garden','Back Garden','Roof Garden','Dishwasher','Fridge/Freezer','Off-Street Parking','Parking','Swimming Pool','Shower','Pets Allowed'];
+                                               	$checkboxs=['Double Glazed','Central Heating','Communal Heating','High Ceilings','TV','Washing Machine','Wooden Floors','Cable','Satelite','Video Player','Lift','Garden','Front Garden','Back Garden','Roof Garden','Dishwasher','Fridge/Freezer','Off-Street Parking','Parking','Swimming Pool','Shower','Pets Allowed'];
                                                	foreach($checkboxs as $checkbox):	
+                                                  $name='metadata['.strtolower(str_replace(' ', '_', $checkbox)).']';
                                                	echo '<label class="option mb10" style="width:45%;">';
-                                              	echo Form::checkbox('name', 'value');
+                                              	echo Form::checkbox($name, 'YES');
                                               	echo '<span class="checkbox"></span>'.$checkbox;
                                               	echo '</label>';
                                                endforeach;
